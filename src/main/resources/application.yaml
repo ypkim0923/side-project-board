@@ -1,4 +1,4 @@
-debug: true # debug log enable
+debug: false # debug log enable
 management.endpoints.web.exposure.include: "*"
 
 # 특정 패키지 로그 레벨 커스터마이징
@@ -14,6 +14,9 @@ spring:
     username: ypkim
     password: 1
     driver-class-name: com.mysql.cj.jdbc.Driver
+#    url: jdbc:h2:mem:testdb
+#    username: sa
+#    driver-class-name: org.h2.Driver
   jpa:
     defer-datasource-initialization: true # 테스트용 데이터베이서 실행 할 때 초기 데이터 생성을 위한 초기 쿼리문 실행 (data.sql)
     hibernate.ddl-auto: create # entity만 보고도 ddl 자동으로 만들어주는 옵션
@@ -21,7 +24,7 @@ spring:
     properties:
       hibernate.format_sql: true # Hibernate ORM 공부 필수 ! | 한줄로나오는 쿼리를 예쁘게 포맷팅 해주는 옵션
       hibernate.default_batch_fetch_size: 100 # 연관관계가 있는 복잡한 쿼리가 있는 쿼리를 한번의 셀렉트 하게 넣어줌 앤플루언싱 쿼리(?)
-  h2.console.enabled: true
+#  h2.console.enabled: true
   sql.init.mode: always # data.sql언제 작동시킬것인가
 
   data.rest:
