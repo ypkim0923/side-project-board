@@ -29,7 +29,7 @@ spring:
 
   data.rest:
     base-path: /api
-    detection-strategy: annotated
+    detection-strategy: annotated #
 #---
 #
 #spring:
