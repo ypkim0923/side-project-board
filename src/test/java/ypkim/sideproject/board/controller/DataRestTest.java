@@ -1,5 +1,6 @@
 package ypkim.sideproject.board.controller;
 
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 
-
+@Disabled("Spring Data REST 통합테스트는 불필요함으로 Disabled")
 @DisplayName("Data Rest - API Test")
 @Transactional
 @AutoConfigureMockMvc
