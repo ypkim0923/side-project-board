@@ -1,19 +1,16 @@
 package ypkim.sideproject.board.repository;
 
+import java.util.List;
+
 import org.assertj.core.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
-import org.springframework.context.annotation.Import;
-import org.springframework.test.context.ActiveProfiles;
 import ypkim.sideproject.board.config.JpaConfig;
 import ypkim.sideproject.board.domain.Article;
-import ypkim.sideproject.board.repository.ArticleRepository;
-import ypkim.sideproject.board.repository.ArticleCommentRepository;
 
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
+import org.springframework.context.annotation.Import;
 
 //@ActiveProfiles("testdb") // Test 전용 DB
 //@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
@@ -22,57 +19,58 @@ import java.util.List;
 @DataJpaTest
 class JpaRepositoryTest {
 
-    private ArticleRepository articleRepository;
-    private ArticleCommentRepository articleCommentRepository;
+	private ArticleRepository articleRepository;
 
-    public JpaRepositoryTest(@Autowired ArticleRepository articleRepository, @Autowired ArticleCommentRepository articleCommentRepository) {
-        this.articleRepository = articleRepository;
-        this.articleCommentRepository = articleCommentRepository;
-    }
+	private ArticleCommentRepository articleCommentRepository;
 
-    @DisplayName("Select Test")
-    @Test
-    void givenTestData_whenSelecting_thenWorkFine() {
-        List<Article> articles = articleRepository.findAll();
-        Assertions.assertThat(articles).isNotNull().hasSize(100);
-    }
+	public JpaRepositoryTest(@Autowired ArticleRepository articleRepository, @Autowired ArticleCommentRepository articleCommentRepository) {
+		this.articleRepository = articleRepository;
+		this.articleCommentRepository = articleCommentRepository;
+	}
 
-    @DisplayName("Insert Test")
-    @Test
-    void givenTestData_whenInserting_thenWorkFine() {
+	@DisplayName("Select Test")
+	@Test
+	void givenTestData_whenSelecting_thenWorkFine() {
+		List<Article> articles = articleRepository.findAll();
+		Assertions.assertThat(articles).isNotNull().hasSize(100);
+	}
 
-        long previousCount = articleRepository.count();
-        Article article = Article.of("new article","new content","#spring");
+	@DisplayName("Insert Test")
+	@Test
+	void givenTestData_whenInserting_thenWorkFine() {
 
-        Article savedArticle = articleRepository.save(article);
+		long previousCount = articleRepository.count();
+		Article article = Article.of("new article", "new content", "#spring");
 
-        Assertions.assertThat(articleRepository.count()).isEqualTo(previousCount + 1);
-    }
+		Article savedArticle = articleRepository.save(article);
 
-    @DisplayName("Update Test")
-    @Test
-    void givenTestData_whenUpdating_thenWorkFine() {
+		Assertions.assertThat(articleRepository.count()).isEqualTo(previousCount + 1);
+	}
 
-        Article article = articleRepository.findById(1L).orElseThrow();
-        String updateHashTag = "#springboot";
-        article.setHashtag(updateHashTag);
+	@DisplayName("Update Test")
+	@Test
+	void givenTestData_whenUpdating_thenWorkFine() {
 
-        Article savedArticle = articleRepository.saveAndFlush(article);
+		Article article = articleRepository.findById(1L).orElseThrow();
+		String updateHashTag = "#springboot";
+		article.setHashtag(updateHashTag);
 
-        Assertions.assertThat(savedArticle).hasFieldOrPropertyWithValue("hashtag", updateHashTag);
-    }
+		Article savedArticle = articleRepository.saveAndFlush(article);
 
-    @DisplayName("Delete Test")
-    @Test
-    void givenTestData_whenDeleting_thenWorkFine() {
+		Assertions.assertThat(savedArticle).hasFieldOrPropertyWithValue("hashtag", updateHashTag);
+	}
 
-        Article article = articleRepository.findById(1L).orElseThrow();
-        long previousArticleCount = articleRepository.count();
-        long previousArticleCommentCount = articleCommentRepository.count();
-        long deletedCommentsSize = article.getArticleComments().size();
+	@DisplayName("Delete Test")
+	@Test
+	void givenTestData_whenDeleting_thenWorkFine() {
 
-        articleRepository.delete(article);
+		Article article = articleRepository.findById(1L).orElseThrow();
+		long previousArticleCount = articleRepository.count();
+		long previousArticleCommentCount = articleCommentRepository.count();
+		long deletedCommentsSize = article.getArticleComments().size();
 
-        Assertions.assertThat(articleRepository.count()).isEqualTo(previousArticleCount -1);
-    }
+		articleRepository.delete(article);
+
+		Assertions.assertThat(articleRepository.count()).isEqualTo(previousArticleCount - 1);
+	}
 }
