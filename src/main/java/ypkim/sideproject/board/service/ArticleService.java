@@ -1,11 +1,9 @@
 package ypkim.sideproject.board.service;
 
-import java.time.LocalDateTime;
-import java.util.List;
-
 import lombok.RequiredArgsConstructor;
 import ypkim.sideproject.board.domain.type.SearchType;
 import ypkim.sideproject.board.dto.ArticleDto;
+import ypkim.sideproject.board.dto.ArticleUpdateDto;
 import ypkim.sideproject.board.repository.ArticleRepository;
 
 import org.springframework.data.domain.Page;
@@ -27,5 +25,14 @@ public class ArticleService {
 	public ArticleDto searchArticles(long l) {
 
 		return null;
+	}
+
+	public void saveArticle(ArticleDto dto) {
+	}
+
+	public void updateArticle(long l, ArticleUpdateDto of) {
+	}
+
+	public void deleteArticle(long l) {
 	}
 }
