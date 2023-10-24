@@ -1,56 +1,64 @@
 package ypkim.sideproject.board.domain;
 
+import java.util.Objects;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Index;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import org.springframework.data.annotation.CreatedBy;
-import org.springframework.data.annotation.CreatedDate;
-import org.springframework.data.annotation.LastModifiedBy;
-import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.jpa.domain.support.AuditingEntityListener;
-
-import javax.persistence.*;
-import java.time.LocalDateTime;
-import java.util.Objects;
 
 @Getter
 @ToString
 @Table(indexes = {
-        @Index(columnList = "content"),
-        @Index(columnList = "createdAt"),
-        @Index(columnList = "createdBy")
+		@Index(columnList = "content"),
+		@Index(columnList = "createdAt"),
+		@Index(columnList = "createdBy")
 })
 @Entity
-public class ArticleComment extends AuditingFields{
+public class ArticleComment extends AuditingFields {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Long id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	private Long id;
 
-    @Setter @ManyToOne(optional = false) private Article article;
-    @Setter @Column(nullable = false, length = 255) private String content;
+	@Setter
+	@ManyToOne(optional = false)
+	private Article article;
 
-    protected ArticleComment() {}
+	@Setter
+	@Column(nullable = false, length = 255)
+	private String content;
 
-    private ArticleComment(Article article, String content) {
-        this.article = article;
-        this.content = content;
-    }
+	protected ArticleComment() {
+	}
 
-    public static ArticleComment of(Article article, String content) {
-        return new ArticleComment(article, content);
-    }
+	private ArticleComment(Article article, String content) {
+		this.article = article;
+		this.content = content;
+	}
 
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
-        ArticleComment that = (ArticleComment) o;
-        return id != null && id.equals(that.id);
-    }
+	public static ArticleComment of(Article article, String content) {
+		return new ArticleComment(article, content);
+	}
 
-    @Override
-    public int hashCode() {
-        return Objects.hash(id);
-    }
+	@Override
+	public boolean equals(Object o) {
+		if (this == o) return true;
+		if (o == null || getClass() != o.getClass()) return false;
+		ArticleComment that = (ArticleComment) o;
+		return id != null && id.equals(that.id);
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(id);
+	}
 }
