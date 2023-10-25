@@ -3,10 +3,11 @@ package ypkim.sideproject.board.service;
 import lombok.RequiredArgsConstructor;
 import ypkim.sideproject.board.domain.type.SearchType;
 import ypkim.sideproject.board.dto.ArticleDto;
-import ypkim.sideproject.board.dto.ArticleUpdateDto;
+import ypkim.sideproject.board.dto.ArticleWithCommentsDto;
 import ypkim.sideproject.board.repository.ArticleRepository;
 
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -17,12 +18,12 @@ public class ArticleService {
 	private final ArticleRepository repository;
 
 	@Transactional(readOnly = true)
-	public Page<ArticleDto> searchArticles(SearchType searchType, String searchKeyword) {
+	public Page<ArticleDto> searchArticles(SearchType searchType, String searchKeyword, Pageable pageable) {
 
 		return Page.empty();
 	}
 
-	public ArticleDto searchArticles(long l) {
+	public ArticleWithCommentsDto getArticle(Long articleId) {
 
 		return null;
 	}
@@ -30,7 +31,7 @@ public class ArticleService {
 	public void saveArticle(ArticleDto dto) {
 	}
 
-	public void updateArticle(long l, ArticleUpdateDto of) {
+	public void updateArticle(ArticleDto dto) {
 	}
 
 	public void deleteArticle(long l) {

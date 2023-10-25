@@ -1,6 +1,6 @@
-insert into user_account (user_id, user_password, nickname, email, memo, created_at,
+insert into user_account (id, user_id, user_password, nickname, email, memo, created_at,
                           created_by, modified_at, modified_by)
-values (1, 'ypkim', 'asdf1234', 'ypkim', 'ypkim0923@gmail.com', 'YPKIIM.', now(), 'ypkim',
+values (1, 'ypkim', 'asdf1234', 'ypkim', 'ypkim0923@gmail.com', 'ypkim.', now(), 'ypkim',
         now(), 'ypkim')
 ;
 

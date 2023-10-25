@@ -21,6 +21,7 @@ spring:
     properties:
       hibernate.format_sql: true # Hibernate ORM 공부 필수 ! | 한줄로나오는 쿼리를 예쁘게 포맷팅 해주는 옵션
       hibernate.default_batch_fetch_size: 100 # 연관관계가 있는 복잡한 쿼리가 있는 쿼리를 한번의 셀렉트 하게 넣어줌 앤플루언싱 쿼리(?)
+    open-in-view: false
   sql.init.mode: always # data.sql언제 작동시킬것인가
   data.rest:
     base-path: /api
