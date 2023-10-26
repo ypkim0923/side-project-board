@@ -68,35 +68,23 @@
         </div>
     </div>
 
-    <!--    <form>-->
-    <!--        <label for="search-type" hidden>유형</label>-->
-    <!--        <select id="search-type" name="search-type">-->
-    <!--            <option>제목</option>-->
-    <!--            <option>본문</option>-->
-    <!--            <option>ID</option>-->
-    <!--            <option>닉네임</option>-->
-    <!--            <option>해시태그</option>-->
-    <!--        </select>-->
-    <!--        <label for="search-value" hidden>검색어</label>-->
-    <!--        <input id="search-value" name="search-value" placeholder="검색어..." type="search">-->
-    <!--        <button type="submit">검색</button>-->
-    <!--    </form>-->
-
-    <table class="table">
+    <table class="table" id="article-table">
         <thead>
         <tr>
-            <th class="col-6">제목</th>
-            <th class="col-2">해시태그</th>
-            <th class="col">작성자</th>
-            <th class="col">작성일</th>
+            <th class="title col-6">제목</th>
+            <th class="hashtag col-2">해시태그</th>
+            <th class="user-id col">작성자</th>
+            <th class="created-by col">작성일</th>
         </tr>
         </thead>
         <tbody>
         <tr>
-            <td>첫글</td>
-            <td>#java</td>
-            <td>Uno</td>
-            <td>2022-01-01</td>
+            <td class="title"><a>첫글</a></td>
+            <td class="hashtag">#java</td>
+            <td class="user-id">ypkim</td>
+            <td class="created-at">
+                <time>2022-01-01</time>
+            </td>
         </tr>
         <tr>
             <td>두번째글</td>
@@ -125,7 +113,10 @@
 
 </main>
 
-<footer id="footer"></footer>
+<footer id="footer">
+    <hr>
+    푸터
+</footer>
 
 <script crossorigin="anonymous"
         integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL"
