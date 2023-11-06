@@ -4,6 +4,7 @@ import com.querydsl.core.types.dsl.DateTimeExpression;
 import com.querydsl.core.types.dsl.StringExpression;
 import ypkim.sideproject.board.domain.Article;
 import ypkim.sideproject.board.domain.QArticle;
+import ypkim.sideproject.board.repository.querydsl.ArticleRepositoryCustom;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -16,6 +17,7 @@ import org.springframework.data.rest.core.annotation.RepositoryRestResource;
 @RepositoryRestResource
 public interface ArticleRepository extends
 		JpaRepository<Article, Long>,
+		ArticleRepositoryCustom,
 		QuerydslPredicateExecutor<Article>, // 모든 검색기능 추가
 		QuerydslBinderCustomizer<QArticle> {
 
