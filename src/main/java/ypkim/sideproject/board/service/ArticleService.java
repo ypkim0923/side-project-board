@@ -1,5 +1,7 @@
 package ypkim.sideproject.board.service;
 
+import java.util.List;
+
 import javax.persistence.EntityNotFoundException;
 
 import lombok.RequiredArgsConstructor;
@@ -73,5 +75,11 @@ public class ArticleService {
 
 	public void deleteArticle(long l) {
 		repository.deleteById(l);
+	}
+
+	public Page<ArticleDto> searchArticlesViaHashtag(Object o, Pageable pageable) {
+	}
+
+	public List<String> getHashtags() {
 	}
 }
