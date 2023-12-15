@@ -52,4 +52,14 @@ public class ArticleController {
 		map.addAttribute("articleComments", response.articleCommentResponses());
 		return "articles/detail";
 	}
+
+	@GetMapping("/search-hashtag")
+	public String searchHashtag(
+			@RequestParam(required = false) SearchType searchType,
+			@RequestParam(required = false) String searchValue,
+			@PageableDefault(size = 10, sort = "createdBy", direction = Direction.DESC) Pageable pageable,
+			ModelMap map) {
+
+		return "articles/search-hashtag";
+	}
 }

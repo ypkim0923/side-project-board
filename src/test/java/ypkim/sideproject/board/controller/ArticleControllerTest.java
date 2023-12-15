@@ -156,24 +156,49 @@ class ArticleControllerTest {
 		// given
 
 		// when
-		mvc.perform(get("/articles/1"))
+		mvc.perform(get("/articles/search-hashtag"))
 				.andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
 				.andExpect(view().name("articles/search"));
 	}
 
 
-	@Disabled("개발 중")
 	@DisplayName("[view][GET] 게시글 hashTag 검색 페이지 - 정상 호출")
 	@Test
-	public void givenNoting_whenRequestingArticlesHashtagView_thenReturnsArticlesView() throws Exception {
+	public void givenNoting_whenRequestingArticlesSearchHashtagView_thenReturnsArticlesSearchView() throws Exception {
 		// given
-
+		given(service.searchArticlesViaHashtag(eq(null), any(Pageable.class))).willReturn(Page.empty());
 		// when
-		mvc.perform(get("/articles/1"))
+		mvc.perform(get("/articles/search-hashtag"))
 				.andExpect(status().isOk())
 				.andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
-				.andExpect(view().name("articles/search-hashtag"));
+				.andExpect(view().name("articles/search-hashtag"))
+				.andExpect(model().attribute("articles", Page.empty()))
+				.andExpect(model().attributeExists("hashtags"))
+				.andExpect(model().attributeExists("paginationBarNumbers"));
+
+		// then
+		then(service).should().searchArticlesViaHashtag(eq(null), any(Pageable.class));
+	}
+
+	@DisplayName("[view][GET] 게시글 hashTag 검색 페이지 - 정상 호출 해시태그 입력")
+	@Test
+	public void givenHashtag_whenRequestingArticlesSearchHashtagView_thenReturnsArticlesSearchView() throws Exception {
+		// given
+		String hashtag = "#java";
+
+		given(service.searchArticlesViaHashtag(eq(hashtag), any(Pageable.class))).willReturn(Page.empty());
+		// when
+		mvc.perform(get("/articles/search-hashtag").queryParam("searchValue", hashtag))
+				.andExpect(status().isOk())
+				.andExpect(content().contentTypeCompatibleWith(MediaType.TEXT_HTML))
+				.andExpect(view().name("articles/search-hashtag"))
+				.andExpect(model().attribute("articles", Page.empty()))
+				.andExpect(model().attributeExists("hashtags"))
+				.andExpect(model().attributeExists("paginationBarNumbers"));
+
+		// then
+		then(service).should().searchArticlesViaHashtag(eq(null), any(Pageable.class));
 	}
 
 	private ArticleWithCommentsDto createArticleWithCommentsDto() {
