@@ -73,9 +73,9 @@ class ArticleControllerTest {
 		then(paginationService).should().getPaginationBarNumbers(anyInt(), anyInt());
 	}
 
-	@DisplayName("[view][Get]")
+	@DisplayName("[view][GET] 게시글 리스트 (게시판) 페이지 - 검색어와 함께 호출")
 	@Test
-	public void givenSearchKeword_whenSearchingArticlesView_thenArticlesView() throws Exception {
+	public void givenSearchKeword_whenSearchingArticlesView_thenReturnArticlesView() throws Exception {
 
 		// given
 		SearchType searchType = SearchType.TITLE;
@@ -97,7 +97,7 @@ class ArticleControllerTest {
 				.andExpect(model().attributeExists("searchTypes"));
 
 		// then
-		then(service).should().searchArticles(eq(null), eq(null), any(Pageable.class));
+		then(service).should().searchArticles(eq(searchType), eq(searchValue), any(Pageable.class));
 		then(paginationService).should().getPaginationBarNumbers(anyInt(), anyInt());
 	}
 
@@ -167,7 +167,12 @@ class ArticleControllerTest {
 	@Test
 	public void givenNoting_whenRequestingArticlesSearchHashtagView_thenReturnsArticlesSearchView() throws Exception {
 		// given
+		List<String> hashtags = List.of("#java", "#spring", "#boot");
 		given(service.searchArticlesViaHashtag(eq(null), any(Pageable.class))).willReturn(Page.empty());
+		given(service.getHashtags()).willReturn(hashtags);
+		given(paginationService.getPaginationBarNumbers(anyInt(), anyInt())).willReturn(List.of(1, 2, 3, 4, 5));
+
+
 		// when
 		mvc.perform(get("/articles/search-hashtag"))
 				.andExpect(status().isOk())
@@ -175,10 +180,13 @@ class ArticleControllerTest {
 				.andExpect(view().name("articles/search-hashtag"))
 				.andExpect(model().attribute("articles", Page.empty()))
 				.andExpect(model().attributeExists("hashtags"))
-				.andExpect(model().attributeExists("paginationBarNumbers"));
+				.andExpect(model().attributeExists("paginationBarNumbers"))
+				.andExpect(model().attribute("searchType", SearchType.HASHTAG));
 
 		// then
 		then(service).should().searchArticlesViaHashtag(eq(null), any(Pageable.class));
+		then(service).should().getHashtags();
+		then(paginationService).should().getPaginationBarNumbers(anyInt(), anyInt());
 	}
 
 	@DisplayName("[view][GET] 게시글 hashTag 검색 페이지 - 정상 호출 해시태그 입력")
@@ -186,8 +194,12 @@ class ArticleControllerTest {
 	public void givenHashtag_whenRequestingArticlesSearchHashtagView_thenReturnsArticlesSearchView() throws Exception {
 		// given
 		String hashtag = "#java";
-
+		List<String> hashtags = List.of("#java", "#spring", "#boot");
 		given(service.searchArticlesViaHashtag(eq(hashtag), any(Pageable.class))).willReturn(Page.empty());
+		given(service.getHashtags()).willReturn(hashtags);
+		given(paginationService.getPaginationBarNumbers(anyInt(), anyInt())).willReturn(List.of(1, 2, 3, 4, 5));
+
+
 		// when
 		mvc.perform(get("/articles/search-hashtag").queryParam("searchValue", hashtag))
 				.andExpect(status().isOk())
@@ -198,7 +210,10 @@ class ArticleControllerTest {
 				.andExpect(model().attributeExists("paginationBarNumbers"));
 
 		// then
-		then(service).should().searchArticlesViaHashtag(eq(null), any(Pageable.class));
+		then(service).should().searchArticlesViaHashtag(eq(hashtag), any(Pageable.class));
+		then(service).should().getHashtags();
+		then(paginationService).should().getPaginationBarNumbers(anyInt(), anyInt());
+
 	}
 
 	private ArticleWithCommentsDto createArticleWithCommentsDto() {

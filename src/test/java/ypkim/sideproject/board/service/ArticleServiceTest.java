@@ -82,7 +82,7 @@ class ArticleServiceTest {
 		given(articleRepository.findByHashtag(hashtag, pageable)).willReturn(Page.empty(pageable));
 
 		// When
-		Page<ArticleDto> articles = service.searchArticlesViaHashtag(null, pageable);
+		Page<ArticleDto> articles = service.searchArticlesViaHashtag(hashtag, pageable);
 
 		// Then
 		assertThat(articles).isEqualTo(Page.empty(pageable));
@@ -110,7 +110,6 @@ class ArticleServiceTest {
 	void givenNoSearchParameters_whenSearchingArticlesViaHashtag_thenReturnsEmptyPage() {
 		// Given
 		Pageable pageable = Pageable.ofSize(20);
-		given(articleRepository.findAll(pageable)).willReturn(Page.empty());
 
 		// When
 		Page<ArticleDto> articles = service.searchArticlesViaHashtag(null, pageable);
